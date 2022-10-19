@@ -1,3 +1,15 @@
+# 프로젝트 실행 방법
+
+### 먼저 `git clone`으로 프로젝트를 로컬 스토리지에 저장시킵니다.
+
+### `npm` 이 설치되지 않은 경우, `npm install`을 진행합니다.
+
+### 터미널로 로컬 스토리지의 프로젝트 파일의 루트 경로로 이동하여 `npm start` 명령어를 입력합니다.
+
+# 프로젝트 배포 링크
+
+### `https://yujeansohn.github.io/wanted-pre-onboarding-frontend/`
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
