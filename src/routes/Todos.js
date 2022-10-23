@@ -1,10 +1,53 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import styled from "styled-components";
 import axios from "axios";
 
 import Todo from "../components/Todo";
 import Alert from "../components/Alert";
-import styles from "./Todos.module.css";
+
+const Title = styled.h1`
+    text-align: center;
+`;
+
+const Wrapper = styled.div`
+    position: relative;
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+`;
+
+const Box = styled.div`
+    margin: 1%;
+    width: 46%;
+    padding: 20px;
+    box-shadow: 0px 3px 5px 3px rgba(0, 0, 0, 0.3);
+`;
+
+const Content = styled.div`
+    width: 100%;
+    padding: 10px 0;
+`;
+
+const TodosInput = styled.input`
+    width: 80%;
+    height: 50px;
+`;
+
+const SubmitBtn = styled.button`
+    margin-left: 3%;
+    width: 15%;
+    height: 50px;
+    background-color: blueviolet;
+    border: none;
+    color: white;
+`;
+
+const Item = styled.div`
+    width: 50%;
+    text-indent: 20px;
+    line-height: 50px;
+`;
 
 const Todos = () => {
     const [todo, setTodo] = useState("");
@@ -12,8 +55,8 @@ const Todos = () => {
     const [dones, setDones] = useState([]);
     const [action, setAction] = useState("");
     const [resp, setResp] = useState(0);
-    const location = useLocation();
-    const token = location.state.token;
+    // const location = useLocation();
+    const token = "1234";
     axios.defaults.headers = { 
         Authorization: `Bearer ${token}`
     };
@@ -43,12 +86,18 @@ const Todos = () => {
                 return;
             } 
 
-            const params = {
-                "todo": todo
-            }
+            // const params = {
+            //     "todo": todo
+            // }
 
-            const resp = await axios.post("https://pre-onboarding-selection-task.shop/todos", params);
-            const data = resp.data;
+            // const resp = await axios.post("https://pre-onboarding-selection-task.shop/todos", params);
+            // const data = resp.data;
+            const data = [
+                {
+                    id: 1,
+                    todo: todo,
+                },
+            ]
             setTodos((current) => [data, ...current]);
             setTodo("");
         } catch(e) {
@@ -136,25 +185,26 @@ const Todos = () => {
         }
     }
 
-    useEffect(() => getTodos, []);
+    // useEffect(() => getTodos, []);
 
     return (
         <div>
-            <h1>TODOS</h1>
-            <div className={styles.content}>
-                <div className={styles.todos}>
-                    <h2>할일</h2>
-                    <div className={styles.wrapper}>
-                        <input
-                            className={styles.create_input}
+            <Title>TODOS</Title>
+            <Wrapper>
+                <Box>
+                    <Title as="h2">할일</Title>
+                    <Content>
+                        <TodosInput
                             value={todo} 
                             onChange={handleChangeTodo} 
                             type="text" 
                             placeholder="할일을 입력해주세요."
                         />
-                        <button className={styles.add_btn} onClick={event => addTodo(event)}>추가</button>
-                    </div>
-                    <div className={styles.wrapper}>
+                        <SubmitBtn onClick={event => addTodo(event)}>
+                            추가
+                        </SubmitBtn>
+                    </Content>
+                    <Content>
                         <ul>
                             {todos.map((item) =>
                                 <Todo 
@@ -167,19 +217,21 @@ const Todos = () => {
                                 />
                             )}
                         </ul>
-                    </div>
-                </div>
-                <div className={styles.dones}>
-                    <h2>완료한 일</h2>
-                    <ul>
-                        {dones.map((item) =>
-                            <li key={Math.random(dones.length)}>
-                                <div className={styles.item}>{item}</div>
-                            </li>
-                        )}
-                    </ul>
-                </div>
-            </div>
+                    </Content>
+                </Box>
+                <Box>
+                    <Title as="h2">완료한 일</Title>
+                    <Content>
+                        <ul>
+                            {dones.map((item) =>
+                                <li key={Math.random(dones.length)}>
+                                    <Item>{item}</Item>
+                                </li>
+                            )}
+                        </ul>
+                    </Content>
+                </Box>
+            </Wrapper>
             {
                 resp !== 0?
                 <Alert status={resp} token="" action={action}/>:

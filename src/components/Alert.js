@@ -1,8 +1,38 @@
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import styled from 'styled-components';
 
-import styles from './Alert.module.css';
+const AlertBox = styled.div`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -75px;
+    margin-left: -300px;
+    width: 600px;
+    height: 200px;
+    background-color: white;
+    box-shadow: 5px 5px 10px 5px rgba(0,0,0,0.2);
+`;
+
+const AlertTxt = styled.p`
+    width: 100%;
+    height: 100px;
+    text-align: center;
+    line-height: 100px;
+`;
+
+const Btn = styled.button`
+    position: absolute;
+    bottom: 10px;
+    left: 190px;
+    width: 220px;
+    height: 50px;
+    background-color: blueviolet;
+    text-align: center;
+    line-height: 30px;
+    color: white;
+`;
 
 const Alert = ({status, token, action}) => {
     const [msg, setMsg] = useState("");
@@ -39,12 +69,12 @@ const Alert = ({status, token, action}) => {
     }
 
     return (
-        <div className={styles.alert}>
+        <AlertBox>
             <div>
-                <p className={styles.alert_txt}>{msg}</p>
-                <button className={styles.close_btn} onClick={redirect}>확인</button>
+                <AlertTxt>{msg}</AlertTxt>
+                <Btn onClick={redirect}>확인</Btn>
             </div>
-        </div>
+        </AlertBox>
     )
 }
 
