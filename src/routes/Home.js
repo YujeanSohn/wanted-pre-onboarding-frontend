@@ -1,8 +1,46 @@
 import { useState } from "react";
 import axios from "axios";
+import styled from "styled-components";
 
-import styles from "./Home.module.css";
 import Alert from "../components/Alert";
+
+const Title = styled.h1`
+    text-align: center;
+`;
+
+const LoginBox = styled.div`
+    width: 500px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+`;
+
+const LoginInput = styled.input`
+    width: 100%;
+    height: 50px;
+    margin-top: 20px;
+`;
+
+const WarningTxt = styled.p`
+    font-size: 12px;
+    color: tomato;
+`;
+
+const BtnBox = styled.div`
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+`;
+
+const SubmitBtn = styled.button`
+    width: 220px;
+    height: 50px;
+    background-color: blueviolet;
+    color: white;
+    border: none;
+`;
 
 const Home = () => {
     const [email, setEmail] = useState("");
@@ -11,7 +49,7 @@ const Home = () => {
     const [isValidPassword, setIsValidPassword] = useState(true);
     const [action, setAction] = useState("");
     const [resp, setResp] = useState(0);
-    const [accessToken, setAccessToken] = useState("");
+    const [accessToken, setAccessToken] = useState("1234");
 
     const signup = async() => {
         try {
@@ -70,13 +108,12 @@ const Home = () => {
     }
 
     return (
-        <div className={styles.bg}>
-            <div className={styles.content}>
-                <h1>TODOS</h1>
-                <h2>로그인</h2>
+        <div className="wrapper">
+            <LoginBox>
+                <Title>TODOS</Title>
+                <Title as="h2">로그인</Title>
                 <div>
-                    <input
-                        className={styles.login_input} 
+                    <LoginInput
                         value={email} 
                         onChange={updateEmail} 
                         onKeyUp={updateEmail} 
@@ -86,12 +123,11 @@ const Home = () => {
                     {
                         isValidEmail? 
                         null: 
-                        <p className={styles.warning}>올바른 이메일 주소를 입력해주세요</p>
+                        <WarningTxt>올바른 이메일 주소를 입력해주세요</WarningTxt>
                     }
                 </div>
                 <div>
-                    <input
-                        className={styles.login_input}  
+                    <LoginInput 
                         value={password} 
                         onChange={updatePassword} 
                         onKeyUp={updatePassword} 
@@ -101,26 +137,24 @@ const Home = () => {
                     {
                         isValidPassword? 
                         null: 
-                        <p className={styles.warning}>비밀번호는 8자 이상 입력해주세요</p>
+                        <WarningTxt>비밀번호는 8자 이상 입력해주세요</WarningTxt>
                     }
                 </div>
-                <div className={styles.btn_content}>
-                    <button
-                        className={styles.submit_btn} 
+                <BtnBox>
+                    <SubmitBtn 
                         onClick={signin} 
                         disabled={!isValidEmail || !isValidPassword}
                     >
                         로그인
-                    </button>
-                    <button
-                        className={styles.submit_btn}  
+                    </SubmitBtn>
+                    <SubmitBtn
                         onClick={signup} 
                         disabled={!isValidEmail || !isValidPassword}
                     >
                         회원가입
-                    </button>
-                </div>
-            </div>
+                    </SubmitBtn>
+                </BtnBox>
+            </LoginBox>
             {
                 resp !== 0? 
                 <Alert status={resp} token={accessToken} action={action}/>: 
