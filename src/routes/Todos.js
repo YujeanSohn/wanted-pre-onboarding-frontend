@@ -11,16 +11,19 @@ const Title = styled.h1`
 `;
 
 const Wrapper = styled.div`
-    position: relative;
     width: 100vw;
-    display: flex;
-    flex-direction: row;
+    &:after{
+        content: "";
+        display: block;
+        clear: both;
+    }
 `;
 
 const Box = styled.div`
-    margin: 1%;
-    width: 46%;
-    padding: 20px;
+    float: left;
+    margin: 2%;
+    width: 42%;
+    padding: 2%;
     box-shadow: 0px 3px 5px 3px rgba(0, 0, 0, 0.3);
 `;
 
@@ -55,7 +58,7 @@ const Todos = () => {
     const [dones, setDones] = useState([]);
     const [action, setAction] = useState("");
     const [resp, setResp] = useState(0);
-    // const location = useLocation();
+    const location = useLocation();
     const token = "1234";
     axios.defaults.headers = { 
         Authorization: `Bearer ${token}`
@@ -86,18 +89,12 @@ const Todos = () => {
                 return;
             } 
 
-            // const params = {
-            //     "todo": todo
-            // }
+            const params = {
+                "todo": todo
+            }
 
-            // const resp = await axios.post("https://pre-onboarding-selection-task.shop/todos", params);
-            // const data = resp.data;
-            const data = [
-                {
-                    id: 1,
-                    todo: todo,
-                },
-            ]
+            const resp = await axios.post("https://pre-onboarding-selection-task.shop/todos", params);
+            const data = resp.data;
             setTodos((current) => [data, ...current]);
             setTodo("");
         } catch(e) {
@@ -185,7 +182,7 @@ const Todos = () => {
         }
     }
 
-    // useEffect(() => getTodos, []);
+    useEffect(() => getTodos, []);
 
     return (
         <div>
